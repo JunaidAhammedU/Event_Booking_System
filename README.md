@@ -119,8 +119,8 @@ yarn install
 
 3. Set up environment variables
 ```env
-DATABASE_URL="postgresql://..."
-NEXTAUTH_SECRET="your-auth-secret"
+DATABASE_URL="prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiZDAwZGEzNDAtNWY1Zi00OWE5LThlNzgtNmZjYjUzYjEzN2NhIiwidGVuYW50X2lkIjoiMDRkYmM2OGExZjkzZmJlNGIwNzE3NGRlNGE2YmJhNDUxZGQ0MmIzYWQwOGQ5NDI4NDBkOWQ5YTdlMzAwMGQ0OCIsImludGVybmFsX3NlY3JldCI6IjA0ZjJhMzA2LTljYTAtNDM3My04YTI4LWViNzhiMjMyZGNiMSJ9.iUJ2NlEPpcXC71Y4VNQ9a0tjmyLt-BL4B25WbIxykJs"
+NEXTAUTH_SECRET="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
 ```
 
 4. Run database migrations
