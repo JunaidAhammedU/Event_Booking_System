@@ -57,95 +57,137 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center text-black">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
-        <div>
-          <h2 className="text-3xl font-bold text-center text-gray-900">
-            Create an account
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-50 p-4 text-black">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <span className="text-4xl mb-4 block">✨</span>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
+            Create your account
           </h2>
-          <p className="mt-2 text-center text-gray-600">
-            Join EventBook to discover amazing events
+          <p className="text-gray-600">
+            Join EventBook and start hosting amazing events
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          {error && (
-            <div className="text-red-600 text-center text-sm">{error}</div>
-          )}
-          
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Full Name
-            </label>
-            <input
-              id="name"
-              {...register('name')}
-              type="text"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            {error && (
+              <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-center gap-2">
+                <span>⚠️</span>
+                {error}
+              </div>
             )}
-          </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email address
-            </label>
-            <input
-              id="email"
-              {...register('email')}
-              type="email"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-            )}
-          </div>
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Full Name
+                </label>
+                <input
+                  id="name"
+                  {...register('name')}
+                  type="text"
+                  placeholder="Enter your full name"
+                  className="block w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                />
+                {errors.name && (
+                  <p className="mt-1.5 text-sm text-red-600 flex items-center gap-1">
+                    <span>⚠️</span>
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              id="password"
-              {...register('password')}
-              type="password"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>
-            )}
-          </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email address
+                </label>
+                <input
+                  id="email"
+                  {...register('email')}
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="block w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                />
+                {errors.email && (
+                  <p className="mt-1.5 text-sm text-red-600 flex items-center gap-1">
+                    <span>⚠️</span>
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-              Confirm Password
-            </label>
-            <input
-              id="confirmPassword"
-              {...register('confirmPassword')}
-              type="password"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            />
-            {errors.confirmPassword && (
-              <p className="mt-1 text-sm text-red-600">{errors.confirmPassword.message}</p>
-            )}
-          </div>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  {...register('password')}
+                  type="password"
+                  placeholder="Enter your password"
+                  className="block w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                />
+                {errors.password && (
+                  <p className="mt-1.5 text-sm text-red-600 flex items-center gap-1">
+                    <span>⚠️</span>
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400"
-          >
-            {isSubmitting ? 'Creating account...' : 'Create account'}
-          </button>
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  {...register('confirmPassword')}
+                  type="password"
+                  placeholder="Confirm your password"
+                  className="block w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors"
+                />
+                {errors.confirmPassword && (
+                  <p className="mt-1.5 text-sm text-red-600 flex items-center gap-1">
+                    <span>⚠️</span>
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+              </div>
+            </div>
 
-          <div className="text-center">
-            <Link href="/login" className="text-blue-600 hover:text-blue-800">
-              Already have an account? Sign in
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 font-medium disabled:from-gray-400 disabled:to-gray-400 focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+            >
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"/>
+                  Creating account...
+                </span>
+              ) : (
+                'Create account'
+              )}
+            </button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-white text-gray-500">Already have an account?</span>
+              </div>
+            </div>
+
+            <Link 
+              href="/login"
+              className="block w-full text-center py-3 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              Sign in
             </Link>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

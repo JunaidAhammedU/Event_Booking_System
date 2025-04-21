@@ -49,136 +49,159 @@ export default function CreateEventPage() {
         const error = await response.json();
         alert(error.error);
       }
-    } catch (error:any) {
+    } catch (error: any) {
       alert(error.message || 'An error occurred while creating the event');
     }
   };
 
   if (!session) {
     return (
-      <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          Please log in to create an event
-        </h2>
-        <Link
-          href="/login"
-          className="text-blue-600 hover:text-blue-800 underline"
-        >
-          Go to Login
-        </Link>
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8 bg-white rounded-2xl shadow-sm border border-gray-100 max-w-md w-full">
+          <span className="text-5xl mb-4 block">🔐</span>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Please log in to create an event
+          </h2>
+          <Link
+            href="/login"
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Go to Login
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto text-black">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Create New Event</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Title</label>
-          <input
-            type="text"
-            {...register('title')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.title && (
-            <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
-          )}
-        </div>
+    <div className="min-h-[calc(100vh-4rem)] bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 text-black">
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="p-8 border-b border-gray-100">
+            <div className="flex items-center gap-4">
+              <span className="text-3xl">✨</span>
+              <h1 className="text-2xl font-bold text-gray-900">Create New Event</h1>
+            </div>
+            <p className="mt-2 text-gray-600">Fill in the details below to create your amazing event.</p>
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Description
-          </label>
-          <textarea
-            {...register('description')}
-            rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.description && (
-            <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
-          )}
-        </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-8">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Event Title</label>
+                <input
+                  type="text"
+                  {...register('title')}
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  placeholder="Give your event a catchy title"
+                />
+                {errors.title && (
+                  <p className="mt-2 text-sm text-red-600">{errors.title.message}</p>
+                )}
+              </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Date and Time
-          </label>
-          <input
-            type="datetime-local"
-            {...register('date')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.date && (
-            <p className="mt-1 text-sm text-red-600">{errors.date.message}</p>
-          )}
-        </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <input
+                  type="text"
+                  {...register('location')}
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  placeholder="Where will it take place?"
+                />
+                {errors.location && (
+                  <p className="mt-2 text-sm text-red-600">{errors.location.message}</p>
+                )}
+              </div>
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Location
-          </label>
-          <input
-            type="text"
-            {...register('location')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.location && (
-            <p className="mt-1 text-sm text-red-600">{errors.location.message}</p>
-          )}
-        </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
+                {...register('description')}
+                rows={4}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                placeholder="Describe your event in detail"
+              />
+              {errors.description && (
+                <p className="mt-2 text-sm text-red-600">{errors.description.message}</p>
+              )}
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Capacity
-          </label>
-          <input
-            type="number"
-            {...register('capacity', { valueAsNumber: true })}
-            min="1"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.capacity && (
-            <p className="mt-1 text-sm text-red-600">{errors.capacity.message}</p>
-          )}
-        </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Date and Time</label>
+              <input
+                type="datetime-local"
+                {...register('date')}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+              />
+              {errors.date && (
+                <p className="mt-2 text-sm text-red-600">{errors.date.message}</p>
+              )}
+            </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Price</label>
-          <input
-            type="number"
-            {...register('price', { valueAsNumber: true })}
-            min="0"
-            step="0.01"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.price && (
-            <p className="mt-1 text-sm text-red-600">{errors.price.message}</p>
-          )}
-        </div>
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Capacity</label>
+                <input
+                  type="number"
+                  {...register('capacity', { valueAsNumber: true })}
+                  min="1"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  placeholder="How many people can attend?"
+                />
+                {errors.capacity && (
+                  <p className="mt-2 text-sm text-red-600">{errors.capacity.message}</p>
+                )}
+              </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Image URL (optional)
-          </label>
-          <input
-            type="url"
-            {...register('image')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-          {errors.image && (
-            <p className="mt-1 text-sm text-red-600">{errors.image.message}</p>
-          )}
-        </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Price</label>
+                <input
+                  type="number"
+                  {...register('price', { valueAsNumber: true })}
+                  min="0"
+                  step="0.01"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                  placeholder="Set a price for your event"
+                />
+                {errors.price && (
+                  <p className="mt-2 text-sm text-red-600">{errors.price.message}</p>
+                )}
+              </div>
+            </div>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400"
-        >
-          {isSubmitting ? 'Creating...' : 'Create Event'}
-        </button>
-      </form>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL (optional)</label>
+              <input
+                type="url"
+                {...register('image')}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                placeholder="Provide an image URL for your event"
+              />
+              {errors.image && (
+                <p className="mt-2 text-sm text-red-600">{errors.image.message}</p>
+              )}
+            </div>
+
+            <div className="pt-6 border-t border-gray-100">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3.5 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 disabled:from-gray-400 disabled:to-gray-400 font-medium text-sm focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Creating...
+                  </span>
+                ) : (
+                  'Create Event'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
