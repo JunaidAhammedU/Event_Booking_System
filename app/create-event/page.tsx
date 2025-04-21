@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast, { Toaster } from 'react-hot-toast';
 
 const eventSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters long'),
@@ -44,13 +45,14 @@ export default function CreateEventPage() {
 
       if (response.ok) {
         const event = await response.json();
+        toast.success('Event created successfully! 🎉');
         router.push(`/events/${event.id}`);
       } else {
         const error = await response.json();
-        alert(error.error);
+        toast.error(error.error || 'Failed to create event');
       }
     } catch (error: any) {
-      alert(error.message || 'An error occurred while creating the event');
+      toast.error(error.message || 'An error occurred while creating the event');
     }
   };
 
@@ -75,6 +77,7 @@ export default function CreateEventPage() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 text-black">
+      <Toaster position="top-center" />
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="p-8 border-b border-gray-100">
