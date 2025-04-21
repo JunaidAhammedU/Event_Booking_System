@@ -107,7 +107,7 @@ model Booking {
 
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/JunaidAhammedU/Event_Booking_System.git
 ```
 
 2. Install dependencies
@@ -134,7 +134,7 @@ npx prisma db push
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open https://event-booking-system-xd99.vercel.app/events with your browser to see the result.
 
 ## Development
 
