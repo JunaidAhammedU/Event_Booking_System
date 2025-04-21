@@ -34,6 +34,21 @@ export async function POST(request: NextRequest) {
         const data = await request.json();
         const { eventId, quantity } = data;
 
+        // Check if user has already booked this event
+        const existingBooking = await prisma.booking.findFirst({
+            where: {
+                eventId,
+                userId: session.user.id,
+            },
+        });
+
+        if (existingBooking) {
+            return NextResponse.json(
+                { error: "You have already booked this event" },
+                { status: 400 }
+            );
+        }
+
         // Check event availability
         const event = await prisma.event.findUnique({
             where: { id: eventId },

@@ -29,6 +29,7 @@ export default function EventDetailsPage() {
   const [event, setEvent] = useState<Event | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch(`/api/events/${params.id}`)
@@ -57,6 +58,7 @@ export default function EventDetailsPage() {
     }
 
     setIsLoading(true);
+    setError(null);
     try {
       const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -72,11 +74,11 @@ export default function EventDetailsPage() {
       if (response.ok) {
         router.push('/my-bookings');
       } else {
-        const error = await response.json();
-        alert(error.error || 'Failed to book tickets');
+        const errorData = await response.json();
+        setError(errorData.error || 'Failed to book tickets');
       }
     } catch (error) {
-      alert('Failed to book tickets');
+      setError('Failed to book tickets');
     } finally {
       setIsLoading(false);
     }
@@ -139,6 +141,12 @@ export default function EventDetailsPage() {
                   <span className="text-lg font-semibold text-gray-900">{availableSeats}</span>
                 </div>
                 
+                {error && (
+                  <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm flex items-center gap-2">
+                    <span>⚠️</span>
+                    {error}
+                  </div>
+                )}
                 {availableSeats > 0 ? (
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
