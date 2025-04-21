@@ -1,36 +1,180 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EventBook - Event Booking System
 
-## Getting Started
+This is a full-stack event booking application built with modern web technologies that allows users to create, browse, and book events.
 
-First, run the development server:
+## Project Overview
 
+EventBook is a comprehensive event booking platform where:
+- Users can browse and search for events
+- Create and manage their own events
+- Book tickets for events
+- Manage their bookings
+
+## Tech Stack
+
+### Frontend
+- **Next.js 15.3** - React framework for server-side rendering and static site generation
+- **React 19.0** - UI library for building user interfaces
+- **TypeScript** - For type-safe code
+- **TailwindCSS** - For styling and responsive design
+- **HeadlessUI** - For accessible UI components
+- **React Hook Form** - For form handling with validation
+- **Zod** - For schema validation
+- **Axios** - For HTTP requests
+
+### Backend
+- **Next.js API Routes** - For serverless API endpoints
+- **Prisma** - ORM for database operations
+- **NextAuth.js** - For authentication
+- **bcrypt** - For password hashing
+
+### Database
+- **PostgreSQL** - Main database (via Prisma)
+
+## Project Structure
+
+```
+├── app/                    # Next.js 13+ app directory
+│   ├── api/               # API routes
+│   │   ├── auth/         # Authentication endpoints
+│   │   ├── bookings/     # Booking management
+│   │   └── events/       # Event management
+│   ├── (routes)/         # Frontend pages
+│   └── layout.tsx        # Root layout
+├── components/            # Reusable React components
+├── lib/                   # Utility functions and configurations
+│   ├── auth.ts           # Authentication setup
+│   └── db.ts             # Database configuration
+└── prisma/               # Database schema and migrations
+```
+
+## Database Schema
+
+The application uses Prisma as ORM with the following main models:
+
+```prisma
+// Main models (simplified view)
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  password  String
+  events    Event[]  // Events created by user
+  bookings  Booking[] // User's bookings
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  date        DateTime
+  location    String
+  capacity    Int
+  price       Float
+  creatorId   Int
+  creator     User     @relation(fields: [creatorId], references: [id])
+  bookings    Booking[]
+}
+
+model Booking {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  userId    Int
+  event     Event    @relation(fields: [eventId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+```
+
+## Features
+
+- **Authentication & Authorization**
+  - User registration and login
+  - Protected routes and API endpoints
+  - Role-based access control
+
+- **Event Management**
+  - Create, update, and delete events
+  - Event search and filtering
+  - Event details with booking functionality
+
+- **Booking System**
+  - Book event tickets
+  - View and manage bookings
+  - Booking confirmation and history
+
+## Setup and Installation
+
+1. Clone the repository
+```bash
+git clone <repository-url>
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables
+```env
+DATABASE_URL="postgresql://..."
+NEXTAUTH_SECRET="your-auth-secret"
+```
+
+4. Run database migrations
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+5. Start the development server
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project uses modern development practices:
+- TypeScript for type safety
+- ESLint for code linting
+- Prettier for code formatting
+- Husky for git hooks
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The application can be deployed on:
+- [Vercel](https://vercel.com) (recommended)
+- [Netlify](https://netlify.com)
+- Any platform supporting Next.js
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The API follows RESTful principles with the following main endpoints:
 
-## Deploy on Vercel
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/[...nextauth]` - Authentication endpoints
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Events
+- `GET /api/events` - List all events
+- `POST /api/events` - Create new event
+- `GET /api/events/:id` - Get event details
+- `PUT /api/events/:id` - Update event
+- `DELETE /api/events/:id` - Delete event
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Bookings
+- `GET /api/bookings` - List user's bookings
+- `POST /api/bookings` - Create new booking
+- `DELETE /api/bookings/:id` - Cancel booking
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines for details.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
